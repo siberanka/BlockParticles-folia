@@ -1,14 +1,36 @@
-### Intellij
-.kotlin/
+# --- IDEs ---
 .idea/
-!.idea/icon.png
+*.iml
+*.iws
+*.ipr
+.vscode/
+.kotlin/
+.settings/
+.classpath
+.project
+.factorypath
 
-### Gradle
-.gradle
+# --- Build Tools ---
+.gradle/
 build/
+bin/
+out/
 
-### Servers
-run/
-
-### Output
+# --- Artifacts ---
 jars/
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# --- Operating System ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Servers & Tests ---
+run/
+logs/
+test-results/

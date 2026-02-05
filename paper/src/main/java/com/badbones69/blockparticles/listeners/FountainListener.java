@@ -31,7 +31,7 @@ public class FountainListener implements Listener {
     private static final Server server = plugin.getServer();
 
     private static final ParticleManager particleManager = plugin.getParticleManager();
-    
+
     private static final Random random = ThreadLocalRandom.current();
 
     private static final List<String> pokemonHeads = Arrays.asList(
@@ -173,15 +173,15 @@ public class FountainListener implements Listener {
             "32f0489ca126a6e9f9afa59eb491b1853395b582b454fc2ad48027226252d121",
             "b5651a18f54714b0b8f7f011c018373b33fd1541ca6f1cfe7a6c97b65241f5",
             "f5612dc7b86d71afc1197301c15fd979e9f39e7b1f41d8f1ebdf8115576e2e");
-    
+
     private static float randomVector() {
         return (float) -.1 + (float) (Math.random() * ((.1 - -.1)));
     }
-    
+
     public static void startCustomFountain(Location loc, String id, String fountainName) {
         startCustomFountain(loc, id, particleManager.getCustomFountain(fountainName));
     }
-    
+
     public static void startCustomFountain(Location loc, String id, CustomFountain fountain) {
         particleManager.getParticleControl().getLocations().put(id, new FoliaScheduler(plugin, loc) {
             @Override
@@ -202,7 +202,7 @@ public class FountainListener implements Listener {
             }
         }.runAtFixedRate(0, 3));
     }
-    
+
     public static void startHalloween(final Location loc, String id) {
         particleManager.getParticleControl().getLocations().put(id, new FoliaScheduler(plugin, loc) {
             @Override
@@ -265,7 +265,7 @@ public class FountainListener implements Listener {
             }
         }.runAtFixedRate(0, 2));
     }
-    
+
     public static void startGems(final Location loc, String id) {
         particleManager.getParticleControl().getLocations().put(id, new FoliaScheduler(plugin, loc) {
             @Override
@@ -316,15 +316,16 @@ public class FountainListener implements Listener {
             }
         }.runAtFixedRate(0, 2));
     }
-    
+
     public static void startHeads(final Location loc, String id) {
         particleManager.getParticleControl().getLocations().put(id, new FoliaScheduler(plugin, loc) {
             @Override
             public void run() {
                 int radius = 10;
-                for (Entity entity : getNearbyEntities(loc.clone(), radius, radius, radius)) {
+                for (Entity entity : loc.getWorld().getNearbyEntities(loc, radius, radius, radius)) {
                     if (entity instanceof Player player) {
-                        final Item head = loc.getWorld().dropItem(loc.clone().add(.5, .8, .5), HeadDatabaseHook.getPlayerHead(player.getName()));
+                        final Item head = loc.getWorld().dropItem(loc.clone().add(.5, .8, .5),
+                                HeadDatabaseHook.getPlayerHead(player.getName()));
                         head.setVelocity(new Vector(randomVector(), .01, randomVector()));
                         particleManager.addFountainItem(head);
 
@@ -340,13 +341,14 @@ public class FountainListener implements Listener {
             }
         }.runAtFixedRate(0, 3));
     }
-    
+
     public static void startPresents(final Location loc, String id) {
         particleManager.getParticleControl().getLocations().put(id, new FoliaScheduler(plugin, loc) {
             @Override
             public void run() {
                 for (String head : getRandomHeads(presentHeads)) {
-                    final Item headItem = loc.getWorld().dropItem(loc.clone().add(.5, .8, .5), HeadDatabaseHook.getPlayerHead(head));
+                    final Item headItem = loc.getWorld().dropItem(loc.clone().add(.5, .8, .5),
+                            HeadDatabaseHook.getPlayerHead(head));
                     headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
                     particleManager.addFountainItem(headItem);
 
@@ -361,13 +363,14 @@ public class FountainListener implements Listener {
             }
         }.runAtFixedRate(0, 3));
     }
-    
+
     public static void startMobs(final Location loc, String id) {
         particleManager.getParticleControl().getLocations().put(id, new FoliaScheduler(plugin, loc) {
             @Override
             public void run() {
                 for (String head : getRandomHeads(mobHeads)) {
-                    final Item headItem = loc.getWorld().dropItem(loc.clone().add(.5, .8, .5), HeadDatabaseHook.getPlayerHead(head));
+                    final Item headItem = loc.getWorld().dropItem(loc.clone().add(.5, .8, .5),
+                            HeadDatabaseHook.getPlayerHead(head));
                     headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
                     particleManager.addFountainItem(headItem);
 
@@ -382,13 +385,14 @@ public class FountainListener implements Listener {
             }
         }.runAtFixedRate(0, 3));
     }
-    
+
     public static void startFood(final Location loc, String id) {
         particleManager.getParticleControl().getLocations().put(id, new FoliaScheduler(plugin, loc) {
             @Override
             public void run() {
                 for (String head : getRandomHeads(foodHeads)) {
-                    final Item headItem = loc.getWorld().dropItem(loc.clone().add(.5, .8, .5), HeadDatabaseHook.getPlayerHead(head));
+                    final Item headItem = loc.getWorld().dropItem(loc.clone().add(.5, .8, .5),
+                            HeadDatabaseHook.getPlayerHead(head));
                     headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
                     particleManager.addFountainItem(headItem);
 
@@ -403,13 +407,14 @@ public class FountainListener implements Listener {
             }
         }.runAtFixedRate(0, 3));
     }
-    
+
     public static void startPokemon(final Location loc, String id) {
         particleManager.getParticleControl().getLocations().put(id, new FoliaScheduler(plugin, loc) {
             @Override
             public void run() {
                 for (String head : getRandomHeads(pokemonHeads)) {
-                    final Item headItem = loc.getWorld().dropItem(loc.clone().add(.5, .8, .5), HeadDatabaseHook.getPlayerHead(head));
+                    final Item headItem = loc.getWorld().dropItem(loc.clone().add(.5, .8, .5),
+                            HeadDatabaseHook.getPlayerHead(head));
                     headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
                     particleManager.addFountainItem(headItem);
 
@@ -424,13 +429,14 @@ public class FountainListener implements Listener {
             }
         }.runAtFixedRate(0, 3));
     }
-    
+
     public static void startMario(final Location loc, String id) {
         particleManager.getParticleControl().getLocations().put(id, new FoliaScheduler(plugin, loc) {
             @Override
             public void run() {
                 for (String head : getRandomHeads(marioHeads)) {
-                    final Item headItem = loc.getWorld().dropItem(loc.clone().add(.5, .8, .5), HeadDatabaseHook.getPlayerHead(head));
+                    final Item headItem = loc.getWorld().dropItem(loc.clone().add(.5, .8, .5),
+                            HeadDatabaseHook.getPlayerHead(head));
                     headItem.setVelocity(new Vector(randomVector(), .01, randomVector()));
 
                     new FoliaScheduler(plugin, loc) {
@@ -444,7 +450,7 @@ public class FountainListener implements Listener {
             }
         }.runAtFixedRate(0, 3));
     }
-    
+
     private static List<String> getRandomHeads(List<String> headList) {
         List<String> pickedHeads = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
@@ -453,7 +459,7 @@ public class FountainListener implements Listener {
         }
         return pickedHeads;
     }
-    
+
     private static List<ItemStack> getRandomCustomHead(List<ItemStack> headList) {
         List<ItemStack> pickedHeads = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
@@ -462,16 +468,14 @@ public class FountainListener implements Listener {
         }
         return pickedHeads;
     }
-    
+
     @SuppressWarnings("deprecation")
     private static List<Entity> getNearbyEntities(Location loc, double x, double y, double z) {
-        if (loc == null || loc.getWorld() == null) return new ArrayList<>();
-        FallingBlock ent = loc.getWorld().spawnFallingBlock(loc.subtract(0, 1, 0), Material.TRIPWIRE, (byte) 0);
-        List<Entity> out = ent.getNearbyEntities(x, y, z);
-        ent.remove();
-        return out;
+        if (loc == null || loc.getWorld() == null)
+            return new ArrayList<>();
+        return new ArrayList<>(loc.getWorld().getNearbyEntities(loc, x, y, z));
     }
-    
+
     @EventHandler
     public void onHopperPickUp(InventoryPickupItemEvent e) {
         if (particleManager.getFountainItem().contains(e.getItem())) {

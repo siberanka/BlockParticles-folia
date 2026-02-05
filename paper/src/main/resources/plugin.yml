@@ -6,13 +6,16 @@ authors:
   - BadBones69
   - Felux
   - TDL
+  - siberanka
 
 version: '${version}'
 description: '${description}'
-api-version: '${minecraft}'
+api-version: '1.21'
 website: '${website}'
 
 softdepend: [HeadDatabase]
+
+folia-supported: true
 
 commands:
   blockparticle:

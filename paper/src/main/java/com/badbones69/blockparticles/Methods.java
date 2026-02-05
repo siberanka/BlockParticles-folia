@@ -23,54 +23,50 @@ public class Methods {
     private static final Server server = plugin.getServer();
 
     private static final ParticleManager particleManager = plugin.getParticleManager();
-    
+
     public static String color(String message) {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
-    
+
     public static ArrayList<String> getLocations() {
         final FileConfiguration data = Files.data.getConfiguration();
 
         final ConfigurationSection section = data.getConfigurationSection("locations");
 
-        if (section == null) return new ArrayList<>();
+        if (section == null)
+            return new ArrayList<>();
 
         return new ArrayList<>(section.getKeys(false));
     }
-    
+
     public static void kill() {
         particleManager.getParticleControl().getLocations().clear();
 
-        for (World w : server.getWorlds()) {
-            for (Entity e : w.getEntities()) {
-                if (e instanceof Item item) {
-                    if (particleManager.getFountainItem().contains(item)) {
-                        item.remove();
-                    }
-                }
-            }
-        }
+        particleManager.getFountainItems().forEach(Entity::remove);
 
-        particleManager.getFountainItem().clear();
+        particleManager.getFountainItems().clear();
 
         server.getGlobalRegionScheduler().cancelTasks(plugin);
     }
-    
+
     public static void startParticles() {
         final FileConfiguration data = Files.data.getConfiguration();
 
         final ConfigurationSection section = data.getConfigurationSection("locations");
 
-        if (section == null) return;
+        if (section == null)
+            return;
 
         for (final String id : section.getKeys(false)) {
             final World world = server.getWorld(data.getString("locations." + id + ".world", "world"));
 
-            if (world == null) break;
+            if (world == null)
+                break;
 
             String particle = data.getString("locations." + id + ".particle");
 
-            final Location loc = new Location(world, data.getInt("locations." + id + ".x"), data.getInt("locations." + id + ".y"), data.getInt("locations." + id + ".z"));
+            final Location loc = new Location(world, data.getInt("locations." + id + ".x"),
+                    data.getInt("locations." + id + ".y"), data.getInt("locations." + id + ".z"));
 
             final BPFountains fountain = BPFountains.getFromName(particle);
 
@@ -228,7 +224,7 @@ public class Methods {
             }
         }
     }
-    
+
     public static void addLoc(Player player, String name, String particle) {
         final FileConfiguration configuration = Files.config.getConfiguration();
 
@@ -284,7 +280,7 @@ public class Methods {
 
         player.sendMessage(color(prefix + "&3You have added &6" + name + " &3to the block."));
     }
-    
+
     public static void delLoc(CommandSender player, String name) {
         final FileConfiguration configuration = Files.config.getConfiguration();
 
@@ -305,7 +301,7 @@ public class Methods {
         for (String loc : section.getKeys(false)) {
             if (loc.equalsIgnoreCase(name)) {
                 data.set("locations." + loc, null);
-                
+
                 Files.data.save();
 
                 particleManager.getParticleControl().getLocations().get(loc).cancel();
@@ -322,7 +318,7 @@ public class Methods {
             player.sendMessage(color(prefix + "&3There are no locations called &6" + name + "&3."));
         }
     }
-    
+
     public static void listLoc(Player player) {
         final FileConfiguration configuration = Files.config.getConfiguration();
 
@@ -348,8 +344,9 @@ public class Methods {
             String x = data.getString("locations." + id + ".x");
             String y = data.getString("locations." + id + ".y");
             String z = data.getString("locations." + id + ".z");
-            
-            part = Methods.color("&8[&6" + line + "&8]: " + "&c" + id + "&8, &c" + world + "&8, &c" + x + "&8, &c" + y + "&8, &c" + z);
+
+            part = Methods.color("&8[&6" + line + "&8]: " + "&c" + id + "&8, &c" + world + "&8, &c" + x + "&8, &c" + y
+                    + "&8, &c" + z);
 
             l.append(part);
             l.append("\n");
@@ -365,7 +362,7 @@ public class Methods {
         player.sendMessage(msg);
         player.sendMessage(Methods.color("&3Number of locations: &6" + line));
     }
-    
+
     public static void setLoc(Player player, String name, String particle) {
         final FileConfiguration configuration = Files.config.getConfiguration();
 
@@ -373,8 +370,10 @@ public class Methods {
 
         final FileConfiguration data = Files.data.getConfiguration();
 
-        if (BPFountains.getFromName(particle) == null && BPParticles.getFromName(particle) == null && particleManager.getCustomFountain(particle) == null) {
-            player.sendMessage(color(prefix + "&6" + particle + " &cis not a particle. Please do /bp help for more information."));
+        if (BPFountains.getFromName(particle) == null && BPParticles.getFromName(particle) == null
+                && particleManager.getCustomFountain(particle) == null) {
+            player.sendMessage(
+                    color(prefix + "&6" + particle + " &cis not a particle. Please do /bp help for more information."));
 
             return;
         }
@@ -394,7 +393,8 @@ public class Methods {
 
                     startParticles();
 
-                    player.sendMessage(color(prefix + "&3You have just set &6" + name + "'s &3particle to &6" + particle + "&3."));
+                    player.sendMessage(
+                            color(prefix + "&3You have just set &6" + name + "'s &3particle to &6" + particle + "&3."));
 
                     hasLocation = true;
 
@@ -403,6 +403,7 @@ public class Methods {
             }
         }
 
-        if (!hasLocation) player.sendMessage(color(prefix + "&3There are no locations called &6" + name + "&3."));
+        if (!hasLocation)
+            player.sendMessage(color(prefix + "&3There are no locations called &6" + name + "&3."));
     }
 }
