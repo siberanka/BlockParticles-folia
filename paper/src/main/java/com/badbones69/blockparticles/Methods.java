@@ -40,6 +40,11 @@ public class Methods {
     }
 
     public static void kill() {
+        particleManager.getParticleControl().getLocations().values().forEach(task -> {
+            if (task != null)
+                task.cancel();
+        });
+
         particleManager.getParticleControl().getLocations().clear();
 
         particleManager.getFountainItems().forEach(Entity::remove);
